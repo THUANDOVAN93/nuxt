@@ -1,22 +1,5 @@
 <script setup>
-const menuList = [
-  { title: "Action" },
-  { title: "Another Action" },
-  { title: "Something elese here" },
-];
-
-const tableHeader = ["", "Name", "Deadline", "Status"];
-
-const tableData = [
-  {
-    id: 1,
-    name: "Design a FreshCart Home page",
-    deadline: "Today",
-    status: 1,
-  }
-];
-
-const customers = async () => {
+const getCustomers = async () => {
   // errorMessage.value = '';
   const config = useRuntimeConfig();
   try {
@@ -41,9 +24,16 @@ const customers = async () => {
   }
 };
 
-const data = await customers();
+const menuList = [
+  { title: "Action" },
+  { title: "Another Action" },
+  { title: "Something elese here" },
+];
 
-console.log(data);
+const tableHeader = ["", "Họ tên", "Email", "Nhóm", "Trạng thái", ""];
+
+const tableData = await getCustomers();
+
 
 const resolveStatusVariant = (status) => {
   if (status === 1)
@@ -105,7 +95,7 @@ const resolveStatusVariant = (status) => {
             {{ item.name }}
           </td>
           <td class="min-w-37">
-            {{ item.deadline }}
+            {{ item.email }}
           </td>
           <td>
             <v-chip
@@ -117,6 +107,10 @@ const resolveStatusVariant = (status) => {
               {{ resolveStatusVariant(item.status).text }}
             </v-chip>
           </td>
+          <td>
+            {{ item.email }}
+          </td>
+          <td>Action</td>
         </tr>
       </tbody>
     </v-table>
