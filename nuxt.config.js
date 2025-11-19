@@ -171,4 +171,14 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  runtimeConfig: {
+    // Private keys, only available on the server-side
+    apiSecret: 'your-server-side-api-secret', 
+
+    // Public keys, available on both client and server
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api', // Default to '/api' or use an environment variable
+    },
+  },
 });

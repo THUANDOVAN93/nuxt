@@ -20,9 +20,47 @@ const errors = ref({
 
 const onSubmit = () => {
   refVForm.value?.validate().then(({ valid: isValid }) => {
-    if (isValid) alert("Your account has been credited successfully");
+    if (isValid) {
+      const formData = {
+        userName: userName.value,
+        email: email.value,
+        password: password.value,
+        confirmPassword: confirmPassword.value,
+        policyCheck: policyCheck.value,
+      };
+      console.log('Form Data:', formData);
+      handleSignup(formData);
+    };
   });
 };
+
+const handleSignup = async (data) => {
+  // errorMessage.value = '';
+  const config = useRuntimeConfig();
+  try {
+    const response = await fetch(config.public.apiBase+ '/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ data }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Signup failed');
+    }
+
+    // Handle successful signup (e.g., redirect to login or dashboard)
+    console.log('User registered successfully!');
+    // Example: navigateTo('/login');
+  } catch (error) {
+    console.error('Signup error:', error);
+    // errorMessage.value = error.message;
+  }
+};
+
+
 </script>
 <template>
   <v-card elevation="4">
@@ -95,7 +133,7 @@ const onSubmit = () => {
           </template>
         </v-checkbox>
 
-        <v-btn type="submit" block> Create Free Account </v-btn>
+        <v-btn type="submit" block> Create Account </v-btn>
         <div class="mt-4 d-flex align-center justify-space-between ga-2 flex-wrap">
           <NuxtLink to="sign-in" class="font-weight-5 text-primary">
             Already member? Login

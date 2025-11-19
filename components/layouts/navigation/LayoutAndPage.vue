@@ -22,6 +22,10 @@ const Pages = [
     to: "pricing",
   },
   {
+    title: "Customers",
+    to: "customers",
+  },
+  {
     title: "404 Error",
     to: "error-404",
   },
